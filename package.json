@@ -1,0 +1,1 @@
+{"name":"otgit-mvp","private":true,"type":"module","scripts":{"build":"node scripts/build.mjs","start":"node scripts/serve.mjs","test":"node --test tests/*.test.mjs","validate":"node scripts/validate-artifact.mjs"},"engines":{"node":">=22.13"}}
