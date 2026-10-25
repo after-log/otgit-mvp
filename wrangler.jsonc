@@ -7,10 +7,7 @@
   "build": { "command": "node scripts/build-cloudflare.mjs" },
   "assets": { "directory": "./public", "binding": "ASSETS", "run_worker_first": true },
   "d1_databases": [
-    { "binding": "DB", "database_name": "otgit-mvp", "database_id": "REPLACE_WITH_D1_ID", "migrations_dir": "drizzle" }
-  ],
-  "r2_buckets": [
-    { "binding": "BUCKET", "bucket_name": "otgit-mvp-photos" }
+    { "binding": "DB", "database_name": "otgit-mvp", "database_id": "59b73258-a4c1-402e-a53b-a8467bcf7264", "migrations_dir": "drizzle" }
   ],
   "observability": { "enabled": true }
 }

@@ -4,10 +4,10 @@
 
 | 화면 | 주소 |
 | --- | --- |
-| 웹앱 | https://afterlog-otgit-mvp.pongg005.chatgpt.site |
-| 원본 시안 | https://afterlog-otgit-mvp.pongg005.chatgpt.site/prototype.html |
+| 웹앱 | https://otgit-mvp.devmeet-mvp.workers.dev |
+| 원본 시안 | https://otgit-mvp.devmeet-mvp.workers.dev/prototype.html |
 
-지금은 ChatGPT Sites의 기본 설정대로 소유자만 열 수 있습니다. 다른 사람과 보려면 Sites에서 공유 범위를 바꿔야 합니다.
+Cloudflare Workers에 배포되어 있어 누구나 열 수 있습니다. 데이터는 Cloudflare D1에 저장되고, 프로필 사진도 D1의 `photos` 표에 저장됩니다.
 
 원본 `otgit-prototype/local.html`의 따뜻한 밝은 톤과 추천 → 상세 → 좋아요 → 매칭 → 첫 대화 흐름을 기반으로 만든 웹앱입니다. 원본 시안은 `/prototype.html`에서 보존합니다.
 
@@ -38,7 +38,13 @@ npm start
 
 ## 배포
 
-Cloudflare Workers 호환 ESM Worker에 정적 에셋을 포함합니다. `.openai/hosting.json`의 `DB`(D1), `BUCKET`(R2) 바인딩을 사용합니다. SQL 마이그레이션은 `drizzle/`에 있으며 배포 아카이브의 `.openai/drizzle/`에도 포함됩니다. Sites 소스 동기화 → 빌드·검증 → 아카이브 저장 → 배포 순서로 게시합니다. 사이트 생성 시 기본 접근 범위는 소유자 전용이며, 공유는 Sites에서 별도로 설정해야 합니다.
+Cloudflare Workers에 배포합니다. 설정은 `wrangler.jsonc`에 있고, 데이터베이스는 D1(`DB`)을 씁니다. R2 대신 사진을 D1 `photos` 표에 저장하며, 이 연결은 `scripts/build-cloudflare.mjs`가 Cloudflare용 빌드에서 넣습니다. HTML·CSS·JS는 Worker 안에 넣어 보안 헤더를 유지하고, 이미지와 글꼴은 Cloudflare 정적 파일로 보냅니다.
+
+```sh
+npx wrangler login
+npm run db:migrate   # drizzle/ 마이그레이션을 원격 D1에 적용
+npm run deploy
+```
 
 ## 현재 경계
 

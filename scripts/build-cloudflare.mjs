@@ -2,6 +2,7 @@
 // Text files (HTML/CSS/JS) stay inlined so the Worker keeps sending its security headers.
 // Images and fonts are served from Cloudflare static assets (wrangler.jsonc → assets.directory),
 // which keeps the Worker bundle under the 3 MB free-plan limit.
+// Without an R2 binding, photos are stored in the D1 table `photos` (drizzle/0001_photos.sql).
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import path from 'node:path';
 
@@ -18,6 +19,7 @@ await scan('public');
 
 let source = await readFile('worker/index.js', 'utf8');
 const swaps = [
+  ["export default {async fetch(req,env){", "const d1Bucket=db=>({async put(key,data){await db.prepare('INSERT OR REPLACE INTO photos (key,data,created_at) VALUES (?,?,?)').bind(key,data,Date.now()).run();},async get(key){const row=await db.prepare('SELECT data FROM photos WHERE key=?').bind(key).first();return row?{body:new Uint8Array(row.data)}:null;}});\nexport default {async fetch(req,env){if(!env.BUCKET&&env.DB)env={...env,BUCKET:d1Bucket(env.DB)};"],
   ["import { assets } from './assets.js';", 'const assets=' + JSON.stringify(assets) + ';'],
   ["if(!asset)return new Response('Not found',{status:404});", "if(!asset)return env.ASSETS?env.ASSETS.fetch(req):new Response('Not found',{status:404});"],
 ];
