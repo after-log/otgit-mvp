@@ -4,3 +4,4 @@ worker/assets.js
 .local/
 .env*
 node_modules/
+.wrangler/
