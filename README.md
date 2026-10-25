@@ -1,5 +1,14 @@
 # 옷깃 MVP
 
+## 바로가기
+
+| 화면 | 주소 |
+| --- | --- |
+| 웹앱 | https://afterlog-otgit-mvp.pongg005.chatgpt.site |
+| 원본 시안 | https://afterlog-otgit-mvp.pongg005.chatgpt.site/prototype.html |
+
+지금은 ChatGPT Sites의 기본 설정대로 소유자만 열 수 있습니다. 다른 사람과 보려면 Sites에서 공유 범위를 바꿔야 합니다.
+
 원본 `otgit-prototype/local.html`의 따뜻한 밝은 톤과 추천 → 상세 → 좋아요 → 매칭 → 첫 대화 흐름을 기반으로 만든 웹앱입니다. 원본 시안은 `/prototype.html`에서 보존합니다.
 
 ## 실제 동작
